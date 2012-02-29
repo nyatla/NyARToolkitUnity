@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using jp.nyatla.nyartoolkit.cs.markersystem;
 using jp.nyatla.nyartoolkit.cs.core;
@@ -6,63 +7,54 @@ using NyARUnityUtils;
 using System.IO;
 
 
-
-
 public class ARCameraBehaviour : MonoBehaviour
 {
 	private NyARUnityMarkerSystem _ms;
 	private NyARUnityWebCam _ss;
-	private int mid;
+	private int mid;//marker id
+	private GameObject _bg_panel;
 	void Awake()
 	{
 		NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(320,240);
 		this._ms=new NyARUnityMarkerSystem(config);
 		mid=this._ms.addARMarker("../data/patt.hiro",16,25,80);
-//		mid=this._ms.addNyIdMarker(55,80);
+
+		//setup unity webcam
 		WebCamDevice[] devices= WebCamTexture.devices;
+		WebCamTexture w;
 		if (devices.Length > 0){
-			WebCamTexture w=new WebCamTexture(320, 240, 15);
-			
-//			this._ss=new NyARUnityWebCam(new WebCamTexture(320, 240, 12));
+			w=new WebCamTexture(320, 240, 15);
 			this._ss=new NyARUnityWebCam(w);
+			//setup background
+			this._bg_panel=GameObject.Find("Plane");
+			this._bg_panel.renderer.material.mainTexture=w;
+			this._ms.setARBackgroundTransform(this._bg_panel.transform);
+			
+			//setup camera projection
+			this._ms.setARCameraProjection(this.camera);
+			
 		}else{
 			Debug.LogError("No Webcam.");
 		}
-		GameObject.Find("Plane").renderer.material.mainTexture=new Texture2D(320,240,TextureFormat.BGRA32,false);
 	}
 	// Use this for initialization
 	void Start ()
 	{
-		//setup camera projection
-//		this.camera.projectionMatrix=this._ms.getUnityProjectionMatrix();
-		this.camera.nearClipPlane=10;
-		this.camera.farClipPlane=10000;
-		this.camera.transform.LookAt(new Vector3(0,0,0),new Vector3(1,0,0));
-		GameObject bg=GameObject.Find("Plane");
-		bg.transform.position=new Vector3(0,0,4000);
-		bg.transform.localScale=new Vector3(-320,1f,240);
-		
+		//start sensor
 		this._ss.start();
 	}
-	static int r=0;
 	// Update is called once per frame
 	void Update ()
 	{
 		//Update SensourSystem
 		this._ss.update();
+		//Update marker system by ss
 		this._ms.update(this._ss);
-		this._ss.dGetGsTex((Texture2D)(GameObject.Find("Plane").renderer.material.mainTexture));
+		//update Gameobject transform
 		if(this._ms.isExistMarker(mid)){
-			Transform t=GameObject.Find("Cube").transform;
-			
-			this._ms.setTransformFromMatrix(mid,t);
-//			t.localPosition=this._ms.getUnityMarkerMatrix(mid).GetColumn(3);
-//			.localToWorldMatrix.SetRow();
-			//=this._ms.getUnityMarkerMatrix(mid);
-//			Debug.Log("Y"+r++);
+			this._ms.setUnityMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
 		}else{
-//			Debug.Log("N"+r++);
+			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,-100);
 		}
-		//setup Gameobject?
 	}
 }
