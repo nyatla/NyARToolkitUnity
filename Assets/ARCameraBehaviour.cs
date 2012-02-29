@@ -12,6 +12,13 @@ using System.IO;
 /// 1.Connect webcam to your computer.
 /// 2.Start sample program
 /// 3.Take a "HIRO" marker on capture image
+/// 
+/// * Structure of scene
+/// object tree
+/// -Unity
+///  +-camera (add ARCameraBehaviour)
+///  +-MarkerObject as Gameobject (for transform matrix)
+///    +-Cube as Cube
 /// </summary>
 public class ARCameraBehaviour : MonoBehaviour
 {
@@ -23,7 +30,7 @@ public class ARCameraBehaviour : MonoBehaviour
 	{
 		NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(320,240);
 		this._ms=new NyARUnityMarkerSystem(config);
-		mid=this._ms.addARMarker("../data/patt.hiro",16,25,80);
+		mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
 
 		//setup unity webcam
 		WebCamDevice[] devices= WebCamTexture.devices;
