@@ -6,7 +6,13 @@ using jp.nyatla.nyartoolkit.cs.core;
 using NyARUnityUtils;
 using System.IO;
 
-
+/// <summary>
+/// AR camera behaviour.
+/// This sample shows simpleLite demo.
+/// 1.Connect webcam to your computer.
+/// 2.Start sample program
+/// 3.Take a "HIRO" marker on capture image
+/// </summary>
 public class ARCameraBehaviour : MonoBehaviour
 {
 	private NyARUnityMarkerSystem _ms;
@@ -54,6 +60,7 @@ public class ARCameraBehaviour : MonoBehaviour
 		if(this._ms.isExistMarker(mid)){
 			this._ms.setUnityMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
 		}else{
+			// hide Game object
 			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,-100);
 		}
 	}
