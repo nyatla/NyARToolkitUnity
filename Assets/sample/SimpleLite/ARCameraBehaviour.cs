@@ -28,16 +28,16 @@ public class ARCameraBehaviour : MonoBehaviour
 	private GameObject _bg_panel;
 	void Awake()
 	{
-		NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(320,240);
-		this._ms=new NyARUnityMarkerSystem(config);
-		mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
-
 		//setup unity webcam
 		WebCamDevice[] devices= WebCamTexture.devices;
 		WebCamTexture w;
 		if (devices.Length > 0){
 			w=new WebCamTexture(320, 240, 15);
 			this._ss=new NyARUnityWebCam(w);
+			NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(w.requestedWidth,w.requestedHeight);
+			this._ms=new NyARUnityMarkerSystem(config);
+			mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
+
 			//setup background
 			this._bg_panel=GameObject.Find("Plane");
 			this._bg_panel.renderer.material.mainTexture=w;
