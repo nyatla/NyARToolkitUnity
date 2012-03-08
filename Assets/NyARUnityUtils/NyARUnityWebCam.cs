@@ -50,12 +50,6 @@ namespace NyARUnityUtils
 		{
 			throw new NyARException();
 		}
-		/// <summary>
-		/// This is for debug!
-		/// </summary>
-		/// <param name='tx'>
-		/// Tx.
-		/// </param>
 		public void dGetGsTex(Texture2D tx)
 		{
 			int[] s=(int[])this._gs_raster.getBuffer();
