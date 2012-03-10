@@ -1,26 +1,12 @@
 using UnityEngine;
+using UnityEditor;
 using System;
 using System.Collections;
 using jp.nyatla.nyartoolkit.cs.markersystem;
 using jp.nyatla.nyartoolkit.cs.core;
 using NyARUnityUtils;
 using System.IO;
-
-/// <summary>
-/// AR camera behaviour.
-/// This sample shows simpleLite demo.
-/// 1.Connect webcam to your computer.
-/// 2.Start sample program
-/// 3.Take a "HIRO" marker on capture image
-/// 
-/// * Structure of scene
-/// object tree
-/// -Unity
-///  +-camera (add ARCameraBehaviour)
-///  +-MarkerObject as Gameobject (for transform matrix)
-///    +-Cube as Cube
-/// </summary>
-public class ARCameraBehaviour : MonoBehaviour
+public class ImagePickup : MonoBehaviour
 {
 	private NyARUnityMarkerSystem _ms;
 	private NyARUnityWebCam _ss;
@@ -36,7 +22,8 @@ public class ARCameraBehaviour : MonoBehaviour
 			this._ss=new NyARUnityWebCam(w);
 			NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(w.requestedWidth,w.requestedHeight);
 			this._ms=new NyARUnityMarkerSystem(config);
-			mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
+//			mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
+			mid=this._ms.addNyIdMarker(0,99999,80);
 
 			//setup background
 			this._bg_panel=GameObject.Find("Plane");
@@ -49,30 +36,28 @@ public class ARCameraBehaviour : MonoBehaviour
 		}else{
 			Debug.LogError("No Webcam.");
 		}
-	}
+	}	
 	// Use this for initialization
 	void Start ()
 	{
-		//start sensor
 		this._ss.start();
 	}
 	// Update is called once per frame
 	void Update ()
 	{
-		//Update SensourSystem
-		this._ss.update();
 		//Update marker system by ss
+		this._ss.update();
 		this._ms.update(this._ss);
 		//update Gameobject transform
 		if(this._ms.isExistMarker(mid)){
 			this._ms.setUnityMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
+			GameObject.Find("Cube").renderer.material.mainTexture=this._ms.getMarkerPlaneImage(mid,this._ss,-40,-40,80,80,new Texture2D(64,64));
 			Debug.Log(c+":"+this._ms.getConfidence(mid));
+			c++;
 		}else{
-			Debug.Log(c+":not found");
 			// hide Game object
 			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,-100);
 		}
-		c++;
 	}
-	static int c=0;
+	int c;
 }

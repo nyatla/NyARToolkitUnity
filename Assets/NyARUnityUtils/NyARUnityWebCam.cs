@@ -6,14 +6,20 @@ using jp.nyatla.nyartoolkit.cs.core;
 
 namespace NyARUnityUtils
 {
+	/// <summary>
+	/// This class provides WebCamTexture wrapper derived  from NyARMarkerSystemSensor.
+	/// </summary>
+	/// <exception cref='NyARException'>
+	/// Is thrown when the ny AR exception.
+	/// </exception>
 	public class NyARUnityWebCam :NyARSensor
 	{
 		private WebCamTexture _wtx;
 	    private NyARUnityRaster _raster;	
 		public NyARUnityWebCam(WebCamTexture i_wtx): base(new NyARIntSize(i_wtx.requestedWidth,i_wtx.requestedHeight))
 		{		
-	        //RGBラスタの生成
-	        this._raster = new NyARUnityRaster(i_wtx.requestedWidth,i_wtx.requestedHeight);
+	        //RGBラスタの生成(Webtextureは上下反転必要)
+	        this._raster = new NyARUnityRaster(i_wtx.requestedWidth,i_wtx.requestedHeight,true);
 	        //ラスタのセット
 	        base.update(this._raster);
 			this._wtx=i_wtx;
