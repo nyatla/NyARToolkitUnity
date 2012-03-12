@@ -1,26 +1,16 @@
 using UnityEngine;
+using UnityEditor;
 using System;
 using System.Collections;
 using jp.nyatla.nyartoolkit.cs.markersystem;
 using jp.nyatla.nyartoolkit.cs.core;
 using NyARUnityUtils;
 using System.IO;
-
 /// <summary>
-/// AR camera behaviour.
-/// This sample shows simpleLite demo.
-/// 1.Connect webcam to your computer.
-/// 2.Start sample program
-/// 3.Take a "HIRO" marker on capture image
-/// 
-/// * Structure of scene
-/// object tree
-/// -Unity
-///  +-camera (add ARCameraBehaviour)
-///  +-MarkerObject as Gameobject (for transform matrix)
-///    +-Cube as Cube
+/// このサンプルプログラムは、マーカ表面の画像をテクスチャとして取得します。
+/// マーカファイルには、hiroマーカを使用してください。
 /// </summary>
-public class ARCameraBehaviour : MonoBehaviour
+public class MarkerPlaneBehavior : MonoBehaviour
 {
 	private NyARUnityMarkerSystem _ms;
 	private NyARUnityWebCam _ss;
@@ -49,30 +39,37 @@ public class ARCameraBehaviour : MonoBehaviour
 		}else{
 			Debug.LogError("No Webcam.");
 		}
-	}
+	}	
 	// Use this for initialization
 	void Start ()
 	{
-		//start sensor
 		this._ss.start();
 	}
+	int c=0;
 	// Update is called once per frame
 	void Update ()
 	{
-		//Update SensourSystem
-		this._ss.update();
 		//Update marker system by ss
+		this._ss.update();
 		this._ms.update(this._ss);
+		Vector3 mpos=Input.mousePosition;
+		mpos=this.camera.ScreenToViewportPoint(mpos);
+		mpos.x=(mpos.x)*320;
+		mpos.y=(1.0f-mpos.y)*240;
+		Debug.Log(c+":"+mpos.x+","+mpos.y+","+mpos.z);c++;
 		//update Gameobject transform
 		if(this._ms.isExistMarker(mid)){
 			this._ms.setMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
-			Debug.Log(c+":"+this._ms.getConfidence(mid));
+			//マウス座標の取得
+			//平面座標に変換
+			Vector3 p=new Vector3();
+			this._ms.getMarkerPlanePos(mid,(int)mpos.x,(int)mpos.y,ref p);
+			GameObject.Find("Cube").transform.localPosition=p;
+			Transform t=GameObject.Find("MarkerObject").transform;
 		}else{
-			Debug.Log(c+":not found");
 			// hide Game object
 			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,-100);
 		}
-		c++;
 	}
-	static int c=0;
 }
+

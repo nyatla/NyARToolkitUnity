@@ -6,6 +6,10 @@ using jp.nyatla.nyartoolkit.cs.markersystem;
 using jp.nyatla.nyartoolkit.cs.core;
 using NyARUnityUtils;
 using System.IO;
+/// <summary>
+/// このサンプルプログラムは、マーカ表面の画像をテクスチャとして取得します。
+/// マーカファイルには、hiroマーカを使用してください。
+/// </summary>
 public class ImagePickup : MonoBehaviour
 {
 	private NyARUnityMarkerSystem _ms;
@@ -22,8 +26,7 @@ public class ImagePickup : MonoBehaviour
 			this._ss=new NyARUnityWebCam(w);
 			NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(w.requestedWidth,w.requestedHeight);
 			this._ms=new NyARUnityMarkerSystem(config);
-//			mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
-			mid=this._ms.addNyIdMarker(0,99999,80);
+			mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
 
 			//setup background
 			this._bg_panel=GameObject.Find("Plane");
@@ -32,7 +35,7 @@ public class ImagePickup : MonoBehaviour
 			
 			//setup camera projection
 			this._ms.setARCameraProjection(this.camera);
-			
+			GameObject.Find("Cube").renderer.material.mainTexture=new Texture2D(64,64);
 		}else{
 			Debug.LogError("No Webcam.");
 		}
@@ -50,14 +53,12 @@ public class ImagePickup : MonoBehaviour
 		this._ms.update(this._ss);
 		//update Gameobject transform
 		if(this._ms.isExistMarker(mid)){
-			this._ms.setUnityMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
-			GameObject.Find("Cube").renderer.material.mainTexture=this._ms.getMarkerPlaneImage(mid,this._ss,-40,-40,80,80,new Texture2D(64,64));
-			Debug.Log(c+":"+this._ms.getConfidence(mid));
-			c++;
+			this._ms.setMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
+			//update cube texture
+			this._ms.getMarkerPlaneImage(mid,this._ss,-40,-40,80,80,(Texture2D)(GameObject.Find("Cube").renderer.material.mainTexture));
 		}else{
 			// hide Game object
 			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,-100);
 		}
 	}
-	int c;
 }
