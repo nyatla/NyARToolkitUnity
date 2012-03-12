@@ -11,14 +11,15 @@ using System.IO;
 /// This sample shows simpleLite demo.
 /// 1.Connect webcam to your computer.
 /// 2.Start sample program
-/// 3.Take a "HIRO" marker on capture image
-/// 
+/// 3.Take a "HIRO" marker and "KANJI" on capture image
+///
 /// </summary>
-public class ARCameraBehaviour : MonoBehaviour
+public class SimpleLiteMBehaviour : MonoBehaviour
 {
 	private NyARUnityMarkerSystem _ms;
 	private NyARUnityWebCam _ss;
-	private int mid;//marker id
+	private int mid1;//marker id
+	private int mid2;//marker id
 	private GameObject _bg_panel;
 	void Awake()
 	{
@@ -30,7 +31,8 @@ public class ARCameraBehaviour : MonoBehaviour
 			this._ss=new NyARUnityWebCam(w);
 			NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(w.requestedWidth,w.requestedHeight);
 			this._ms=new NyARUnityMarkerSystem(config);
-			mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
+			mid1=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
+			mid2=this._ms.addARMarker("./Assets/Data/patt.kanji",16,25,80);
 
 			//setup background
 			this._bg_panel=GameObject.Find("Plane");
@@ -58,15 +60,17 @@ public class ARCameraBehaviour : MonoBehaviour
 		//Update marker system by ss
 		this._ms.update(this._ss);
 		//update Gameobject transform
-		if(this._ms.isExistMarker(mid)){
-			this._ms.setMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
-			Debug.Log(c+":"+this._ms.getConfidence(mid));
+		if(this._ms.isExistMarker(mid1)){
+			this._ms.setMarkerTransform(mid1,GameObject.Find("MarkerObject").transform);
 		}else{
-			Debug.Log(c+":not found");
 			// hide Game object
-			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,-100);
+			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,20);
 		}
-		c++;
+		if(this._ms.isExistMarker(mid2)){
+			this._ms.setMarkerTransform(mid2,GameObject.Find("MarkerObject2").transform);
+		}else{
+			// hide Game object
+			GameObject.Find("MarkerObject2").transform.localPosition=new Vector3(0,0,-100);
+		}
 	}
-	static int c=0;
 }
