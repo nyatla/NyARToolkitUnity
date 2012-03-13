@@ -30,7 +30,9 @@ public class ARCameraBehaviour : MonoBehaviour
 			this._ss=new NyARUnityWebCam(w);
 			NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(w.requestedWidth,w.requestedHeight);
 			this._ms=new NyARUnityMarkerSystem(config);
-			mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
+			//mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
+			//This line loads a marker from texture
+			mid=this._ms.addARMarker((Texture2D)(Resources.Load("MarkerHiro", typeof(Texture2D))),16,25,80);
 
 			//setup background
 			this._bg_panel=GameObject.Find("Plane");
