@@ -1,0 +1,5 @@
+Please check Data directory of NyARToolkit for Java.
+--
+NyIdMarkerの仕様書は、NyARToolkit for JavaのDataディレクトリにあります。
+http://svn.sourceforge.jp/view/NyARToolkit/trunk/Data/NyARIdMarkerFormat.odt?root=nyartoolkit&view=log
+
