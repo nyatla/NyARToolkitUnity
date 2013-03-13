@@ -28,11 +28,11 @@ public class SimpleLiteWebBehaviour : MonoBehaviour
 		WebCamDevice[] devices= WebCamTexture.devices;
 		if (devices.Length <=0){
 			Debug.LogError("No Webcam.");
-			return;
+			yield break;
 		}
 		WebCamTexture w=new WebCamTexture(320,240,15);
 		//Make WebcamTexture wrapped Sensor.
-		this._ss=NyARUnityWebCam.createInstance();
+		this._ss=NyARUnityWebCam.createInstance(w);
 
 		//Make configulation by Sensor size.
 		NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(this._ss.width,this._ss.height);
@@ -51,7 +51,6 @@ public class SimpleLiteWebBehaviour : MonoBehaviour
 		this._ms.setARCameraProjection(this.camera);		
 		//start sensor
 		this._ss.start();
-		return;
 	}
 	// Update is called once per frame
 	void Update ()
