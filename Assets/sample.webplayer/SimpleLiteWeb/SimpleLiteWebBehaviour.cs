@@ -28,9 +28,22 @@ public class SimpleLiteWebBehaviour : MonoBehaviour
 		WebCamDevice[] devices= WebCamTexture.devices;
 		WebCamTexture w;
 		if (devices.Length > 0){
-			w=new WebCamTexture(320, 240, 15);
-			this._ss=new NyARUnityWebCam(w);
-			NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(w.requestedWidth,w.requestedHeight);
+			int width=320;
+			int height=240;
+			w=new WebCamTexture(width,height, 15);
+			{
+				int l= w.GetPixels32().Length;
+				if(width*height!=l){
+					int s=(int)Math.Sqrt(l);
+					if(s*s!=l){
+						//ERROR!
+						throw new Exception();
+					}
+					width=height=s;
+				}
+			}			
+			this._ss=new NyARUnityWebCam(w,width,height);
+			NyARMarkerSystemConfig config = new NyARMarkerSystemConfig(width,height);
 			this._ms=new NyARUnityMarkerSystem(config);
 			//mid=this._ms.addARMarker("./Assets/Data/patt.hiro",16,25,80);
 			//This line loads a marker from texture
