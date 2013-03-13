@@ -6,7 +6,7 @@ public class WebcamTestBehaviourScript : MonoBehaviour {
 
     IEnumerator Start ()
     {
-            //許可ダイアログが出る。ユーザーが反応を起こすまで待つ
+            //Show Authrizatton dialog box.
             yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
             //許可が出ればWebCamTextureを使用する
             if (Application.HasUserAuthorization (UserAuthorization.WebCam)) {
