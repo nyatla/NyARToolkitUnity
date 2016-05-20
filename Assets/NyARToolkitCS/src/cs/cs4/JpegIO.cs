@@ -1,5 +1,6 @@
-﻿#define NYARTKCS_DOTNET_FW
-#if NYARTKCS_DOTNET_FW
+﻿#define NYARTKCS_PF_UNITY
+#if NYARTKCS_PF_WIN32
+//For Win32 Platform
 using System.IO;
 using System;
 using System.Drawing;
@@ -98,6 +99,49 @@ namespace jp.nyatla.nyartoolkit.cs.cs4
             //bout.close();
             //jw.dispose();
             //return ret;
+        }
+    }
+}
+
+#elif NYARTKCS_PF_UNITY
+//For UnityPlatform
+using jp.nyatla.nyartoolkit.cs.core;
+
+namespace jp.nyatla.nyartoolkit.cs.cs4
+{
+
+    /**
+     * プラットフォーム依存のJpegデータIOを実装します。
+     *
+     */
+    public class JpegIO
+    {
+        public class DecodeResult
+        {
+            readonly public int x_density;
+            readonly public int y_density;
+            readonly public int density_unit;
+            readonly public byte[] img;
+            readonly public int width;
+            readonly public int height;
+            public DecodeResult(int i_xd, int i_yd, byte[] i_img, int w, int h, int i_unit)
+            {
+                this.height = h;
+                this.width = w;
+                this.img = i_img;
+                this.x_density = i_xd;
+                this.y_density = i_yd;
+                this.density_unit = i_unit;
+            }
+        }
+        public static JpegIO.DecodeResult decode(byte[] i_src)
+        {
+            throw new NyARRuntimeException();
+        }
+
+        public static byte[] encode(int w, int h, int i_x_dpi, int i_y_dpi, int i_dpi_unit, byte[] i_src, float i_quority)
+        {
+            throw new NyARRuntimeException();
         }
     }
 }

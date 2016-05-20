@@ -177,7 +177,7 @@ namespace jp.nyatla.nyartoolkit.cs.markersystem
             //KPMスレッドが待機中になるまで待つ
             while (this._kpm_thread.ThreadState == ThreadState.Running)
             {
-                Thread.Yield();
+                Thread.Sleep(10);
             }
             //追加
             this._nftdatalist.Add(new NftTarget(i_dataset));
