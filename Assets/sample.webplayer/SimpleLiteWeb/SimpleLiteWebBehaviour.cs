@@ -30,7 +30,7 @@ public class SimpleLiteWebBehaviour : MonoBehaviour
 			Debug.LogError("No Webcam.");
 			yield break;
 		}
-		WebCamTexture w=new WebCamTexture(320,240,15);
+		WebCamTexture w=new WebCamTexture(640,480,30);
 		//Make WebcamTexture wrapped Sensor.
 		this._ss=NyARUnityWebCam.createInstance(w);
 
@@ -44,11 +44,11 @@ public class SimpleLiteWebBehaviour : MonoBehaviour
 
 		//setup background
 		this._bg_panel=GameObject.Find("Plane");
-		this._bg_panel.renderer.material.mainTexture=w;
+		this._bg_panel.GetComponent<Renderer>().material.mainTexture=w;
 		this._ms.setARBackgroundTransform(this._bg_panel.transform);
 		
 		//setup camera projection
-		this._ms.setARCameraProjection(this.camera);		
+		this._ms.setARCameraProjection(this.GetComponent<Camera>());		
 		//start sensor
 		this._ss.start();
 	}
@@ -63,8 +63,8 @@ public class SimpleLiteWebBehaviour : MonoBehaviour
 		//Update marker system by ss
 		this._ms.update(this._ss);
 		//update Gameobject transform
-		if(this._ms.isExistMarker(mid)){
-			this._ms.setMarkerTransform(mid,GameObject.Find("MarkerObject").transform);
+		if(this._ms.isExist(mid)){
+			this._ms.setTransform(mid,GameObject.Find("MarkerObject").transform);
 		}else{
 			// hide Game object
 			GameObject.Find("MarkerObject").transform.localPosition=new Vector3(0,0,-100);
