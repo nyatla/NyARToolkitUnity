@@ -1,5 +1,5 @@
 # NyARToolkit for Unity
-version 4.1.1
+version 5.0.8
 
 Copyright (C)2008-2012 Ryo Iizuka
 
@@ -9,23 +9,15 @@ wm(at)nyatla.jp
 
 
 ## About NyARToolkit
-* NyARToolkitは、NyARToolKit 4.1.1のAPIを基盤としたARアプリケーション向けのクラスライブラリです。
-* Unity Player 4.0以上で動作します。
-* ARToolKitの基本機能と、NyARToolKitオリジナルの拡張機能、フレームワークで構成しています。
-* sampleモジュールは、いくつかの動作チェックプログラムと、RPFを使ったサンプルアプリケーションがあります。
+* NyARToolkitUnityは、NyARToolKitCSのUnity向けの実装です。
+* Unity5.3以降に対応しています。
+* 画像データから、ターゲット(ARマーカ、IDマーカ、NFTマーカ)の位置と姿勢を計算することができます。
+* 純粋なC#による実装です。
+* 計算した位置姿勢を、任意のGameObjectに適応することができます。
 
 
 ARToolKitについては、下記のURLをご覧ください。  
 http://www.hitl.washington.edu/artoolkit/
-
-## 特徴
-
-NyARToolkit for Unityの特徴を紹介します。
-* Unity標準のWebCameraオブジェクト、テクスチャ形式の入力が可能です。
-* 純粋なC#で実装されています。プラットフォームに依存しません。WebPlayerでも使用できます。
-* NyId規格のIDマーカが使用できます。
-* MarkerSystemが使用できます。MarkerSystemと組み合わせることで、コンパクトな実装ができます。
-
 
 
 
@@ -44,6 +36,9 @@ sampleディレクトリ以下にあります。
 ARマーカの上に立方体を表示するサンプルです。単一マーカのサンプルです。
 ##### Sample/SimpleLiteM
 複数のARマーカの上に立方体を表示するサンプルです。
+##### Sample/SimpleNFT
+NFT（自然特徴点マーカ）を使うサンプルです。
+
 
 ### webプレイヤー
 
@@ -65,3 +60,10 @@ LGPLv3を承諾された場合には、商用、非商用にかかわらず、�
 LGPLv3については、COPYING.txtをお読みください。
 * 商用ライセンス  
 商用ライセンスについては、ARToolWorks社に管理を委託しております。http://www.artoolworks.com/Home.html
+
+
+## SimpleNFTのカスタマイズ
+
+SimpleNFTが使う画像特徴点ファイル(nftdataset)は、パッケージのData/toolsにある、NftFileGeneratorを使って作成できます。
+NftFileGeneratorで特徴点を計算後、Exportメニューの"Save NYARTK nft dataset"で.datasetを保存してください。
+保存したファイルの拡張子を.bytesに変更して、Resourceディレクトリにコピーすることで、Unityからアクセスできるようになります。
