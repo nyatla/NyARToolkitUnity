@@ -1,4 +1,4 @@
-﻿#define NYARTKCS_DOTNET_FW
+﻿#define NYARTKCS_UNITY
 #if NYARTKCS_DOTNET_FW
 using System;
 using System.Collections.Generic;

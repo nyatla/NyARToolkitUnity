@@ -1,6 +1,7 @@
 ﻿using jp.nyatla.nyartoolkit.cs.core;
 using System.Collections.Generic;
 using System;
+using System.IO;
 using System.Threading;
 namespace jp.nyatla.nyartoolkit.cs.markersystem
 {
@@ -143,8 +144,10 @@ namespace jp.nyatla.nyartoolkit.cs.markersystem
         /**
          * NFTファイルセットのプレフィックスを指定して、NFTターゲットをインスタンスに登録します。
          * 登録される画像のサイズはNFTターゲットファイルの値です。
-         * @param i_fileset_prefix
-         * NFTターゲットのファイルパスのプレフィクス。ファイル名+.iset,.fset,.fset3をセットにして登録します。
+         * @param i_filepath
+         * NFTターゲットを指定します。
+         * 拡張子が.nftdatasetの場合は、nftdataset形式のファイルを登録します。
+         * それ以外の場合は、ファイルパスに.iset,.fset,.fset3を加えたファイルをセットにして登録します。
          * @return
          * 特徴点セットのID値
          */
@@ -161,9 +164,16 @@ namespace jp.nyatla.nyartoolkit.cs.markersystem
          * @return
          * 特徴点セットのID値
          */
-        public int addNftTarget(String i_fileset_prefix, double i_width_in_msec)
+        public int addNftTarget(String i_filepath, double i_width_in_msec)
         {
-            return this.addNftTarget(NyARNftDataSet.loadFromNftFiles(i_fileset_prefix, i_width_in_msec));
+            if (System.Text.RegularExpressions.Regex.IsMatch(i_filepath,".*\\.nftdataset$"))
+            {
+                return this.addNftTarget(NyARNftDataSet.loadFromNftDataSet(i_filepath, i_width_in_msec));
+            }
+            else
+            {
+                return this.addNftTarget(NyARNftDataSet.loadFromNftFiles(i_filepath, i_width_in_msec));
+            }
         }
         /**
          * 生成済みのNFTの特徴点データセットをインスタンスに登録します。
@@ -177,11 +187,21 @@ namespace jp.nyatla.nyartoolkit.cs.markersystem
             //KPMスレッドが待機中になるまで待つ
             while (this._kpm_thread.ThreadState == ThreadState.Running)
             {
-                Thread.Sleep(10);
+                Thread.Sleep(1);
             }
             //追加
             this._nftdatalist.Add(new NftTarget(i_dataset));
             return this._nftdatalist.Count - 1;
+        }
+        /**
+         * InputStreamから.nftdatasetを読みだして登録します。
+         * @param i_stream
+         * @param i_width_in_msec
+         * @return
+         */
+        public int addNftTarget(Stream i_stream, double i_width_in_msec)
+        {
+            return this.addNftTarget(NyARNftDataSet.loadFromNftDataSet(i_stream, i_width_in_msec));
         }
 
         /**

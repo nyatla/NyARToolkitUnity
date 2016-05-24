@@ -83,6 +83,18 @@ namespace jp.nyatla.nyartoolkit.cs.cs4
             Array.Reverse(ba);
             return BitConverter.ToInt32(ba, 0);
         }
+        public int[] getIntArray(int[] it)
+        {
+            for (int i = 0; i < it.Length; i++)
+            {
+                it[i] = this.getInt();
+            }
+            return it;
+        }
+        public int[] getIntArray(int i_size)
+        {
+            return this.getIntArray(new int[i_size]);
+        }
         public byte getByte()
         {
             Debug.Assert(this._pos < this._data.Length);
