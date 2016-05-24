@@ -7,6 +7,7 @@ http://nyatla.jp/nyartoolkit/
 airmail(at)ebony.plala.or.jp  
 wm(at)nyatla.jp
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/h_p89B1i6u0/0.jpg)](https://www.youtube.com/watch?v=h_p89B1i6u0&feature=youtu.be)
 
 ## About NyARToolkit
 * NyARToolkitUnityは、NyARToolKitCSのUnity向けの実装です。
