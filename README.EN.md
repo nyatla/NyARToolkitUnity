@@ -60,7 +60,7 @@ NyARToolkit for Unity is dual licence.
 
 * LGPLv3  
 Check COPYING.txt for more details.
-* Commercial license
+* Commercial license  
 http://www.artoolworks.com/Home.html
 
 
