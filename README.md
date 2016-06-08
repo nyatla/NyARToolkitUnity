@@ -1,4 +1,4 @@
-[Japanese here!](README.EN.md "")
+[English here!](README.EN.md "")
 
 # NyARToolkit for Unity
 version 5.0.8
@@ -16,7 +16,6 @@ wm(at)nyatla.jp
 * Unity5.3以降に対応しています。
 * 画像データから、ターゲット(ARマーカ、IDマーカ、NFTマーカ)の位置と姿勢を計算することができます。
 * 純粋なC#による実装です。
-* 計算した位置姿勢を、任意のGameObjectに適応することができます。
 
 
 ARToolKitについては、下記のURLをご覧ください。  
@@ -29,18 +28,18 @@ http://www.hitl.washington.edu/artoolkit/
 ### Unityアプリケーション
 sampleディレクトリ以下にあります。
 
+##### Sample/SimpleLite
+ARマーカの上に立方体を表示するサンプルです。単一マーカのサンプルです。
+##### Sample/SimpleNFT
+NFT（自然特徴点マーカ）を使うサンプルです。
 ##### Sample/ImagePickup
 マーカ平面から画像を取得するサンプルです。
 ##### Sample/JpegFile
 静止画からマーカを検出するサンプルです。
 ##### Sample/MarkerPlane
 マーカ平面とスクリーン座標を変換するサンプルです。
-##### Sample/SimpleLite
-ARマーカの上に立方体を表示するサンプルです。単一マーカのサンプルです。
 ##### Sample/SimpleLiteM
 複数のARマーカの上に立方体を表示するサンプルです。
-##### Sample/SimpleNFT
-NFT（自然特徴点マーカ）を使うサンプルです。
 
 
 ### webプレイヤー
