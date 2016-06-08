@@ -68,3 +68,7 @@ LGPLv3については、COPYING.txtをお読みください。
 SimpleNFTが使う画像特徴点ファイル(nftdataset)は、パッケージのData/toolsにある、NftFileGeneratorを使って作成できます。
 NftFileGeneratorで特徴点を計算後、Exportメニューの"Save NYARTK nft dataset"で.datasetを保存してください。
 保存したファイルの拡張子を.bytesに変更して、Resourceディレクトリにコピーすることで、Unityからアクセスできるようになります。
+
+## チュートリアル
+* http://nyatla.jp/nyartoolkit/wp/?p=1778
+
