@@ -1,3 +1,5 @@
+[Japanese here!](README.EN.md "")
+
 # NyARToolkit for Unity
 version 5.0.8
 
